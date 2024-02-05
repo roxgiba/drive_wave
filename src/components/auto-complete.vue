@@ -22,7 +22,7 @@
       </li>
     </ul>
 
-    <div v-if="selectedStation">
+    <!-- <div v-if="selectedStation">
       <h2 className=" text-base md:text-2xl font-bold pb-2">
         Bookings for: {{ selectedStation.name }}
       </h2>
@@ -39,6 +39,23 @@
           <span className="text-orange-600">{{ selectedStation.name }}</span>
         </li>
       </ul>
+    </div> -->
+
+    <!-- WEEK VIEW -->
+    <div v-if="selectedStation">
+      <h2 class="text-base md:text-2xl font-bold pb-2">
+        Week View for: {{ selectedStation.name }}
+      </h2>
+      <div class="week-view">
+        <div v-for="day in weekDays" :key="day" class="day-tile">
+          <h3 className="font-bold text-lg">{{ day }}</h3>
+          <ul>
+            <li v-for="booking in getBookingsForDay(day)" :key="booking.id">
+              {{ booking.customerName }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,7 +71,12 @@ export default {
       bookings: [],
 
       // LOADING STATE
-      isLoading: false
+      isLoading: false,
+
+      // WEEK
+
+      weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      selectedDay: null
     }
   },
 
@@ -92,6 +114,13 @@ export default {
       return `${Math.floor(durationInDays)} days`
     },
 
+    getBookingsForDay(day) {
+      // Return the bookings for the selected day
+      return this.bookings.filter(
+        (booking) => new Date(booking.startDate).getDay() === this.weekDays.indexOf(day)
+      )
+    },
+
     selectResult(result) {
       this.selectedStation = result
 
@@ -114,4 +143,29 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.week-view {
+  display: flex;
+  justify-content: space-between;
+}
+
+.day-tile {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+}
+
+.day-tile h3 {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.day-tile ul {
+  list-style: none;
+  padding: 0;
+}
+
+.day-tile li {
+  margin-bottom: 5px;
+}
+</style>
