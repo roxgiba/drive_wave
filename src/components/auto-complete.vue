@@ -1,29 +1,31 @@
 <template>
-  <div>
-    <label>Search for your station here: </label>
+  <div id="search">
+    <label class="text-base md:text-xl">Search for your station here: </label>
 
     <!-- INPUT FIELD  -->
-    <div class="input-container">
-      <input v-model="inputValue" @input="search" className="border-2" />
+    <div class="input-container p-5">
+      <input v-model="inputValue" @input="search" className="border-2 border-indigo-600 rounded" />
       <span
         v-if="inputValue"
         class="clear-icon"
         @click="clearInput"
-        className="text-red-600 text-lg"
+        className="text-red-600 text-lg p-1 font-bold"
         >x</span
       >
     </div>
 
     <!-- CITY RESULTS  -->
     <ul v-if="showResults">
-      <li v-if="isLoading">Loading...</li>
+      <li v-if="isLoading" class="text-slate-500">Loading...</li>
       <li v-for="result in results" :key="result.id" @click="selectResult(result)">
         {{ result.name }}
       </li>
     </ul>
 
     <div v-if="selectedStation">
-      <h2>Bookings for: {{ selectedStation.name }}</h2>
+      <h2 className=" text-base md:text-2xl font-bold pb-2">
+        Bookings for: {{ selectedStation.name }}
+      </h2>
       <ul>
         <li v-if="isLoading">Loading...</li>
         <li v-for="booking in bookings" :key="booking.id">

@@ -3,10 +3,22 @@
 @tailwind components;
 @tailwind utilities;
 
-#app {
+* {
+  margin: 0;
+  font-family: 'Encode Sans', sans-serif;
+}
+
+#search {
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 5% auto;
   padding: 2rem;
+  background-color: #e5e9ed;
+}
+
+#app {
+  /* max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem; */
   text-align: center;
 }
 
