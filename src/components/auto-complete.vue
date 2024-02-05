@@ -14,7 +14,7 @@
       >
     </div>
 
-    <!-- CITY RESULTS  -->
+    <!--  RESULTS  -->
     <ul v-if="showResults">
       <li v-if="isLoading" class="text-slate-500">Loading...</li>
       <li v-for="result in results" :key="result.id" @click="selectResult(result)">
@@ -31,7 +31,12 @@
         <li v-for="booking in bookings" :key="booking.id">
           Customer: <span className="text-lg">{{ booking.customerName }}</span> | Start date:
           <span className="text-green-600">{{ booking.startDate.slice(0, 10) }}</span> | End date:
-          <span className="text-red-600">{{ booking.endDate.slice(0, 10) }}</span>
+          <span className="text-red-600">{{ booking.endDate.slice(0, 10) }}</span> | Duration:
+          <span className="text-blue-600">{{
+            calculateDuration(booking.startDate, booking.endDate)
+          }}</span>
+          | Return station:
+          <span className="text-orange-600">{{ selectedStation.name }}</span>
         </li>
       </ul>
     </div>
@@ -75,6 +80,16 @@ export default {
     clearInput() {
       this.inputValue = ''
       this.selectedStation = ''
+    },
+
+    calculateDuration(startDate, endDate) {
+      const start = new Date(startDate)
+      const end = new Date(endDate)
+
+      const durationInMilliseconds = end - start
+      const durationInDays = durationInMilliseconds / (1000 * 60 * 60 * 24)
+
+      return `${Math.floor(durationInDays)} days`
     },
 
     selectResult(result) {
