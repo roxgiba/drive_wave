@@ -5,7 +5,7 @@
 
   <main>
     <h4 className="text-l md:text-2xl">This is a tech challenge for RoadSurfer</h4>
-    <auto-complete @result-selected="handleResultSelected" className="mt-36" />
+    <auto-complete @station-selected="handleStationSelected" className="mt-36" />
   </main>
 </template>
 
@@ -16,8 +16,8 @@ export default {
     autoComplete
   },
   methods: {
-    handleResultSelected(result) {
-      console.log('Selected result:', result)
+    handleSelectedSelected(selectedStation) {
+      console.log('Selected station:', selectedStation)
     }
   }
 }
